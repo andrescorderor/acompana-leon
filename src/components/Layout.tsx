@@ -85,7 +85,7 @@ export function Layout({ apoderadoTab, onApoderadoTab, onOpenEmergency, children
           </div>
 
           <div className="rounded-xl bg-[#F8F6F2] border border-[#E6E3DE] px-3 py-2 text-[11px] text-[#4B4F56]">
-            Tecnología por <strong className="text-[#2E5A4C]">Uaniofy</strong> · Piloto León, Gto.
+            Tecnología por <strong className="text-[#2E5A4C]">Uanify</strong> · Piloto León, Gto.
           </div>
 
           {/* Navegación contextual */}

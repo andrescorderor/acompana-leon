@@ -1,6 +1,6 @@
-# Acompaña León (MVP) — Tecnología por Uaniofy
+# Acompaña León (MVP) — Tecnología por Uanify
 
-Prototipo funcional MVP para la plataforma de **acompañamiento confiable y trazable** enfocada en adultos mayores y familiares en **León, Guanajuato** *(co-creación Rosi × Uaniofy)*.
+Prototipo funcional MVP para la plataforma de **acompañamiento confiable y trazable** enfocada en adultos mayores y familiares en **León, Guanajuato** *(co-creación Rosi × Uanify)*.
 
 ## Roles interactivos incluidos en el Demo
 - **Apoderado / Familiar:** Expedientes con filtro no-médico (Nivel 1/2/3), agendamiento de Cita Única o Planes Mensuales (4/8 citas), seguimiento en vivo (PIN + Mapa León + WhatsApp + Protocolo 911), actas de entrega y evaluaciones.
