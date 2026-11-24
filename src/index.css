@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-cream: #f8f6f2;
+    --color-sage: #2e5a4c;
+    --color-sage-light: #e8f0ed;
+    --color-terracotta: #c87d4b;
+    --color-charcoal: #33363b;
+  }
+
+  html,
+  body {
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f8f6f2;
+    color: #33363b;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  .font-serif-accent {
+    font-family: "Cormorant Garamond", Georgia, serif;
+  }
+
+  .font-mono-code {
+    font-family: "JetBrains Mono", monospace;
+  }
+}
+
+@keyframes pulseSoft {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.4;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInSlide 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
