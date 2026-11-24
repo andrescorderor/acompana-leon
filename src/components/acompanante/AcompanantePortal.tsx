@@ -343,7 +343,7 @@ export function AcompanantePortal() {
                 Postulación al Marketplace Curado (Validación en 3 Niveles)
               </h3>
               <p className="text-xs text-[#6B7078] mt-0.5">
-                Los aspirantes cargan su expediente de identidad y experiencia; el equipo de operación (Rosi / Admin) revisa y otorga las 3 insignias antes de activar el perfil.
+                Los aspirantes cargan su expediente de identidad y experiencia; el equipo de operación (Rosa María / Admin) revisa y otorga las 3 insignias antes de activar el perfil.
               </p>
             </div>
           </div>

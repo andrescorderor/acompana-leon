@@ -33,7 +33,7 @@ export function AdminPortal() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <h2 className="text-xl font-bold text-[#33363B]">Panel Operativo y Validación (Admin / Rosi)</h2>
+          <h2 className="text-xl font-bold text-[#33363B]">Panel Operativo y Validación (Admin / Rosa María)</h2>
           <p className="text-xs text-[#6B7078]">
             Control de calidad del marketplace curado: acreditación de 3 insignias, torre de citas y metas del Sistema de Seguridad.
           </p>
@@ -230,7 +230,7 @@ export function AdminPortal() {
                       <UserCheck className="w-3.5 h-3.5 text-[#2E5A4C]" /> Nivel 2 · Aptitud y Referencias
                     </span>
                     <span className="text-[#6B7078]">
-                      Entrevista psicosocial de Rosi + {inspecting.documents.referencesCount} referencias verificadas.
+                      Entrevista psicosocial de Rosa María + {inspecting.documents.referencesCount} referencias verificadas.
                     </span>
                   </div>
                 </label>
