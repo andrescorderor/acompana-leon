@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, CheckCircle2, ClipboardCheck, CreditCard, Star, X } from 'lucide-react';
+import { Check, CheckCircle2, ClipboardCheck, Star, X } from 'lucide-react';
 import { useAppState } from '../../context/AppStateContext';
 import type { Appointment } from '../../types';
 
@@ -7,6 +7,7 @@ export function PlanesHistorialView() {
   const { plan, activatePlan, appointments, people, companions, submitEvaluation } = useAppState();
   const completed = appointments.filter((a) => a.status === 'completed');
 
+  const [view, setView] = useState<'planes' | 'historial'>('planes');
   const [actAppointment, setActAppointment] = useState<Appointment | null>(null);
   const [evalAppointment, setEvalAppointment] = useState<Appointment | null>(null);
 
@@ -32,246 +33,186 @@ export function PlanesHistorialView() {
   };
 
   return (
-    <div className="space-y-7 animate-fade-in">
-      {/* Planes de Citas */}
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-xl font-bold text-[#33363B]">Planes de Citas y Contratación</h2>
-          <p className="text-xs text-[#6B7078]">
-            Contrata una sola ocasión o ahorra con paquetes mensuales recurrentes para consultas y trámites en León.
-          </p>
-        </div>
+    <div className="space-y-4 animate-fade-in">
+      {/* Switcher Planes / Historial */}
+      <div className="grid grid-cols-2 gap-1.5 bg-[#E4E1DA]/70 p-1 rounded-2xl">
+        <button
+          type="button"
+          onClick={() => setView('planes')}
+          className={`min-h-11 rounded-xl text-sm font-bold transition-all ${
+            view === 'planes' ? 'bg-white text-[#244B3E] shadow-xs' : 'text-[#555B63]'
+          }`}
+        >
+          Planes de Citas
+        </button>
+        <button
+          type="button"
+          onClick={() => setView('historial')}
+          className={`min-h-11 rounded-xl text-sm font-bold transition-all ${
+            view === 'historial' ? 'bg-white text-[#244B3E] shadow-xs' : 'text-[#555B63]'
+          }`}
+        >
+          Historial ({completed.length})
+        </button>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white rounded-2xl border border-[#E6E3DE] p-5 flex flex-col justify-between gap-4">
-            <div>
-              <span className="text-[11px] font-mono-code uppercase tracking-wider text-[#6B7078]">
-                Pago por Evento
-              </span>
-              <h3 className="text-lg font-bold text-[#33363B] mt-1">Cita Única</h3>
-              <p className="text-2xl font-bold text-[#2E5A4C] mt-2">
-                $320 – $420 <span className="text-xs font-normal text-[#6B7078]">MXN / cita</span>
-              </p>
-              <ul className="mt-3 space-y-1.5 text-xs text-[#4B4F56]">
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-[#2E5A4C]" /> Simple ($320) o Asistida ($420)
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-[#2E5A4C]" /> PIN de seguridad + WhatsApp
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-[#2E5A4C]" /> Acta de entrega verificada
-                </li>
-              </ul>
-            </div>
-            <span className="text-center rounded-xl bg-[#F8F6F2] border border-[#E6E3DE] py-2 text-xs font-semibold text-[#4B4F56]">
-              Disponible al agendar
-            </span>
-          </div>
-
+      {view === 'planes' ? (
+        <div className="space-y-3">
+          {/* Plan 8 Citas */}
           <div
-            className={`rounded-2xl border p-5 flex flex-col justify-between gap-4 ${
-              plan.totalCredits === 4 ? 'bg-[#E8F0ED]/45 border-[#2E5A4C]' : 'bg-white border-[#E6E3DE]'
+            className={`rounded-3xl border p-5 space-y-3 ${
+              plan.totalCredits === 8
+                ? 'bg-[#244B3E] text-white border-[#244B3E]'
+                : 'bg-white text-[#1C2024] border-[#E4E1DA]'
             }`}
           >
-            <div>
-              <span className="text-[11px] font-mono-code uppercase tracking-wider text-[#2E5A4C]">
-                Plan Mensual
+            <div className="flex items-center justify-between">
+              <span className="rounded-full bg-[#C87D4B] text-white px-2.5 py-0.5 text-[11px] font-bold">
+                Recomendado
               </span>
-              <h3 className="text-lg font-bold text-[#33363B] mt-1">Plan Esencial 4 Citas</h3>
-              <p className="text-2xl font-bold text-[#2E5A4C] mt-2">
-                $1,360 <span className="text-xs font-normal text-[#6B7078]">MXN / mes ($340/cita)</span>
+              <span className="text-xs font-semibold opacity-85">$320 / cita</span>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold">Plan Familiar · 8 Citas/mes</h3>
+              <p className="text-2xl font-bold mt-1">
+                $2,560 <span className="text-xs font-normal opacity-80">MXN / mes</span>
               </p>
-              <ul className="mt-3 space-y-1.5 text-xs text-[#4B4F56]">
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-[#2E5A4C]" /> 4 citas asistidas incluidas
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-[#2E5A4C]" /> Hasta 2 expedientes familiares
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-[#2E5A4C]" /> Prioridad con acompañante favorito
-                </li>
-              </ul>
+            </div>
+            <ul className="space-y-1 text-xs opacity-90">
+              <li className="flex items-center gap-1.5">
+                <Check className="w-4 h-4" /> 8 citas asistidas · 24% de ahorro
+              </li>
+              <li className="flex items-center gap-1.5">
+                <Check className="w-4 h-4" /> Expedientes familiares ilimitados
+              </li>
+            </ul>
+            <button
+              type="button"
+              onClick={() => activatePlan(8)}
+              className={`w-full min-h-12 rounded-2xl text-sm font-bold transition-colors ${
+                plan.totalCredits === 8 ? 'bg-white text-[#244B3E]' : 'bg-[#244B3E] text-white'
+              }`}
+            >
+              {plan.totalCredits === 8 ? '✓ Plan Activo (Renovar 8)' : 'Activar Plan 8 Citas'}
+            </button>
+          </div>
+
+          {/* Plan 4 Citas */}
+          <div
+            className={`rounded-3xl border p-5 space-y-3 ${
+              plan.totalCredits === 4 ? 'bg-[#E8F0ED] border-[#244B3E]' : 'bg-white border-[#E4E1DA]'
+            }`}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-[#244B3E]">Plan Mensual</span>
+              <span className="text-xs font-semibold text-[#555B63]">$340 / cita</span>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-[#1C2024]">Plan Esencial · 4 Citas/mes</h3>
+              <p className="text-2xl font-bold text-[#244B3E] mt-1">
+                $1,360 <span className="text-xs font-normal text-[#555B63]">MXN / mes</span>
+              </p>
             </div>
             <button
               type="button"
               onClick={() => activatePlan(4)}
-              className={`rounded-xl py-2.5 text-xs font-semibold transition-colors ${
+              className={`w-full min-h-12 rounded-2xl text-sm font-bold ${
                 plan.totalCredits === 4
-                  ? 'bg-[#2E5A4C] text-white'
-                  : 'border border-[#2E5A4C] text-[#2E5A4C] hover:bg-[#E8F0ED]'
+                  ? 'bg-[#244B3E] text-white'
+                  : 'border border-[#244B3E] text-[#244B3E]'
               }`}
             >
-              {plan.totalCredits === 4 ? '✓ Plan Activo (Restaurar 4 créditos)' : 'Activar Plan 4 Citas'}
+              {plan.totalCredits === 4 ? '✓ Plan Activo (Renovar 4)' : 'Activar Plan 4 Citas'}
             </button>
           </div>
 
-          <div
-            className={`rounded-2xl border p-5 flex flex-col justify-between gap-4 relative ${
-              plan.totalCredits === 8
-                ? 'bg-[#2E5A4C] text-white border-[#2E5A4C]'
-                : 'bg-white text-[#33363B] border-[#E6E3DE]'
-            }`}
-          >
+          {/* Cita Única */}
+          <div className="bg-white rounded-3xl border border-[#E4E1DA] p-5 flex items-center justify-between">
             <div>
-              <span className="inline-block rounded-full bg-[#C87D4B] text-white px-2.5 py-0.5 text-[10px] font-mono-code uppercase tracking-wider">
-                Recomendado
-              </span>
-              <h3 className="text-lg font-bold mt-1.5">Plan Familiar 8 Citas</h3>
-              <p className="text-2xl font-bold mt-2">
-                $2,560{' '}
-                <span className={`text-xs font-normal ${plan.totalCredits === 8 ? 'text-emerald-100' : 'text-[#6B7078]'}`}>
-                  MXN / mes ($320/cita)
-                </span>
-              </p>
-              <ul className={`mt-3 space-y-1.5 text-xs ${plan.totalCredits === 8 ? 'text-emerald-50' : 'text-[#4B4F56]'}`}>
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5" /> 8 citas asistidas al mes
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5" /> Expedientes familiares ilimitados
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5" /> 24% ahorro vs. citas individuales
-                </li>
-              </ul>
+              <h3 className="text-base font-bold text-[#1C2024]">Cita Única</h3>
+              <p className="text-xs text-[#555B63]">Simple $320 · Asistida $420 MXN</p>
             </div>
-            <button
-              type="button"
-              onClick={() => activatePlan(8)}
-              className={`rounded-xl py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors ${
-                plan.totalCredits === 8
-                  ? 'bg-white text-[#2E5A4C] hover:bg-emerald-50'
-                  : 'bg-[#2E5A4C] text-white hover:bg-[#23473b]'
-              }`}
-            >
-              <CreditCard className="w-3.5 h-3.5" />
-              {plan.totalCredits === 8 ? 'Plan Activo · Renovar 8 créditos' : 'Cambiar a Plan 8 Citas'}
-            </button>
+            <span className="text-xs font-bold text-[#555B63] bg-[#F8F6F2] px-3 py-1.5 rounded-xl border border-[#E4E1DA]">
+              Sin suscripción
+            </span>
           </div>
         </div>
-      </div>
+      ) : (
+        /* Tarjetas móviles apiladas de Historial */
+        <div className="space-y-3">
+          {completed.map((apt) => {
+            const p = people.find((x) => x.id === apt.personId);
+            const c = companions.find((x) => x.id === apt.companionId);
+            const avg = apt.evaluation
+              ? ((apt.evaluation.safety + apt.evaluation.punctuality + apt.evaluation.dignity + apt.evaluation.communication) / 4).toFixed(1)
+              : null;
 
-      {/* Historial y Actas */}
-      <div className="bg-white rounded-2xl border border-[#E6E3DE] p-5 sm:p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-bold text-[#33363B]">Historial de Acompañamientos y Actas de Entrega</h3>
-            <p className="text-xs text-[#6B7078]">
-              Registro auditable de cada servicio completado y evaluación de calidad del familiar.
-            </p>
-          </div>
-          <span className="text-xs font-mono-code text-[#2E5A4C] bg-[#E8F0ED] px-2.5 py-1 rounded-full">
-            {completed.length} completados
-          </span>
+            return (
+              <div key={apt.id} className="bg-white rounded-3xl border border-[#E4E1DA] p-4 space-y-3">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <span className="text-xs font-mono-code text-[#555B63]">{apt.scheduledDate}</span>
+                    <h3 className="text-base font-bold text-[#1C2024]">{apt.destinationName}</h3>
+                    <p className="text-xs text-[#555B63]">
+                      {p?.fullName} · con {c?.fullName}
+                    </p>
+                  </div>
+                  {avg && (
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                      <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      {avg}
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  {apt.deliveryAct && (
+                    <button
+                      type="button"
+                      onClick={() => setActAppointment(apt)}
+                      className="min-h-11 rounded-2xl border border-[#E4E1DA] bg-[#F8F6F2] text-xs font-bold text-[#1C2024] flex items-center justify-center gap-1.5"
+                    >
+                      <ClipboardCheck className="w-4 h-4 text-[#244B3E]" />
+                      Ver Acta
+                    </button>
+                  )}
+                  {!apt.evaluation && (
+                    <button
+                      type="button"
+                      onClick={() => setEvalAppointment(apt)}
+                      className="min-h-11 rounded-2xl bg-[#C87D4B] text-white text-xs font-bold flex items-center justify-center gap-1.5"
+                    >
+                      <Star className="w-4 h-4" />
+                      Calificar
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
+      )}
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
-            <thead>
-              <tr className="border-b border-[#E6E3DE] text-[#6B7078] font-mono-code uppercase text-[10px]">
-                <th className="py-2.5 pr-4">Fecha</th>
-                <th className="py-2.5 pr-4">Asistido</th>
-                <th className="py-2.5 pr-4">Destino / Gestión</th>
-                <th className="py-2.5 pr-4">Acompañante</th>
-                <th className="py-2.5 pr-4">Evaluación</th>
-                <th className="py-2.5 text-right">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#F1EFEA]">
-              {completed.map((apt) => {
-                const p = people.find((x) => x.id === apt.personId);
-                const c = companions.find((x) => x.id === apt.companionId);
-                return (
-                  <tr key={apt.id} className="hover:bg-[#F8F6F2]/60">
-                    <td className="py-3 pr-4 font-mono-code whitespace-nowrap">{apt.scheduledDate}</td>
-                    <td className="py-3 pr-4 font-semibold text-[#33363B]">{p?.fullName}</td>
-                    <td className="py-3 pr-4">
-                      <span className="font-medium text-[#33363B] block">{apt.destinationName}</span>
-                      <span className="text-[11px] text-[#6B7078]">{apt.purpose}</span>
-                    </td>
-                    <td className="py-3 pr-4">{c?.fullName}</td>
-                    <td className="py-3 pr-4">
-                      {apt.evaluation ? (
-                        <span className="inline-flex items-center gap-1 text-amber-700 font-semibold">
-                          <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                          {(
-                            (apt.evaluation.safety +
-                              apt.evaluation.punctuality +
-                              apt.evaluation.dignity +
-                              apt.evaluation.communication) /
-                            4
-                          ).toFixed(1)}
-                        </span>
-                      ) : (
-                        <span className="text-[#6B7078]">Pendiente</span>
-                      )}
-                    </td>
-                    <td className="py-3 text-right space-x-2 whitespace-nowrap">
-                      {apt.deliveryAct && (
-                        <button
-                          type="button"
-                          onClick={() => setActAppointment(apt)}
-                          className="inline-flex items-center gap-1 rounded-lg border border-[#E6E3DE] bg-white px-2.5 py-1 text-[11px] font-semibold hover:bg-[#F8F6F2]"
-                        >
-                          <ClipboardCheck className="w-3 h-3 text-[#2E5A4C]" />
-                          Ver Acta
-                        </button>
-                      )}
-                      {!apt.evaluation && (
-                        <button
-                          type="button"
-                          onClick={() => setEvalAppointment(apt)}
-                          className="inline-flex items-center gap-1 rounded-lg bg-[#C87D4B] text-white px-2.5 py-1 text-[11px] font-semibold hover:bg-[#b56d3d]"
-                        >
-                          <Star className="w-3 h-3" />
-                          Evaluar
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Modal Ver Acta */}
+      {/* Bottom Sheet Acta */}
       {actAppointment?.deliveryAct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-[#E6E3DE] overflow-hidden animate-fade-in">
-            <div className="px-5 py-4 bg-[#2E5A4C] text-white flex items-center justify-between">
-              <h3 className="text-sm font-bold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" /> Acta Oficial de Entrega
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs">
+          <div className="bg-white rounded-t-3xl sm:rounded-3xl w-full sm:max-w-[440px] shadow-2xl overflow-hidden animate-sheet-up">
+            <div className="px-5 py-4 bg-[#244B3E] text-white flex items-center justify-between">
+              <h3 className="text-base font-bold flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5" /> Acta de Entrega
               </h3>
               <button type="button" onClick={() => setActAppointment(null)}>
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-5 space-y-3 text-xs text-[#33363B]">
-              <div className="rounded-xl bg-[#F8F6F2] p-3 border border-[#E6E3DE] space-y-1">
-                <p>
-                  <strong>Destino:</strong> {actAppointment.destinationName}
-                </p>
-                <p>
-                  <strong>Hora de entrega:</strong> {actAppointment.deliveryAct.deliveredAt}
-                </p>
-                <p>
-                  <strong>Recibido por:</strong> {actAppointment.deliveryAct.receivedBy}
-                </p>
-                <p>
-                  <strong>Estado aparente:</strong> {actAppointment.deliveryAct.apparentCondition}
-                </p>
-                <p>
-                  <strong>Pertenencias verificadas:</strong>{' '}
-                  {actAppointment.deliveryAct.belongingsVerified ? 'Sí (completo)' : 'Pendiente'}
-                </p>
-              </div>
+            <div className="p-5 space-y-2.5 text-sm text-[#1C2024]">
+              <p><strong>Destino:</strong> {actAppointment.destinationName}</p>
+              <p><strong>Hora:</strong> {actAppointment.deliveryAct.deliveredAt}</p>
+              <p><strong>Recibió:</strong> {actAppointment.deliveryAct.receivedBy}</p>
+              <p><strong>Estado:</strong> {actAppointment.deliveryAct.apparentCondition}</p>
               {actAppointment.deliveryAct.observations && (
-                <p className="leading-relaxed text-[#4B4F56]">
-                  <strong>Observaciones:</strong> {actAppointment.deliveryAct.observations}
+                <p className="text-[#4B4F56] bg-[#F8F6F2] rounded-2xl p-3">
+                  {actAppointment.deliveryAct.observations}
                 </p>
               )}
             </div>
@@ -279,35 +220,35 @@ export function PlanesHistorialView() {
         </div>
       )}
 
-      {/* Modal Evaluar Servicio */}
+      {/* Bottom Sheet Calificación */}
       {evalAppointment && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-[#E6E3DE] overflow-hidden animate-fade-in">
-            <div className="px-5 py-4 bg-[#33363B] text-white flex items-center justify-between">
-              <h3 className="text-sm font-bold">Evaluación de Calidad del Servicio</h3>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs">
+          <div className="bg-white rounded-t-3xl sm:rounded-3xl w-full sm:max-w-[440px] shadow-2xl overflow-hidden animate-sheet-up">
+            <div className="px-5 py-4 bg-[#1C2024] text-white flex items-center justify-between">
+              <h3 className="text-base font-bold">Calificar Servicio</h3>
               <button type="button" onClick={() => setEvalAppointment(null)}>
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <form onSubmit={handleEvalSubmit} className="p-5 space-y-3 text-xs">
+            <form onSubmit={handleEvalSubmit} className="p-5 space-y-4">
               {[
-                { label: 'Seguridad durante el recorrido', val: safety, set: setSafety },
+                { label: 'Seguridad', val: safety, set: setSafety },
                 { label: 'Puntualidad', val: punctuality, set: setPunctuality },
-                { label: 'Trato digno y respeto a la autonomía', val: dignity, set: setDignity },
-                { label: 'Comunicación y avisos por WhatsApp', val: communication, set: setCommunication },
+                { label: 'Trato digno', val: dignity, set: setDignity },
+                { label: 'Avisos WhatsApp', val: communication, set: setCommunication },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between gap-2">
-                  <span className="font-medium text-[#33363B]">{item.label}</span>
-                  <div className="flex gap-1">
+                  <span className="text-sm font-bold text-[#1C2024]">{item.label}</span>
+                  <div className="flex gap-1.5">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
                         type="button"
                         onClick={() => item.set(star)}
-                        className="p-0.5"
+                        className="p-1"
                       >
                         <Star
-                          className={`w-4 h-4 ${
+                          className={`w-7 h-7 ${
                             star <= item.val ? 'fill-amber-500 text-amber-500' : 'text-zinc-300'
                           }`}
                         />
@@ -316,28 +257,18 @@ export function PlanesHistorialView() {
                   </div>
                 </div>
               ))}
-              <div>
-                <label className="block font-semibold text-[#33363B] mb-1">¿Qué podríamos mejorar?</label>
-                <textarea
-                  rows={2}
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Tu opinión ayuda a certificar a los mejores acompañantes en León."
-                  className="w-full rounded-xl border border-[#E6E3DE] p-2.5 text-xs"
-                />
-              </div>
-              <div className="flex justify-end gap-2 pt-1">
-                <button
-                  type="button"
-                  onClick={() => setEvalAppointment(null)}
-                  className="rounded-xl border border-[#E6E3DE] px-3.5 py-2 font-semibold"
-                >
-                  Cancelar
-                </button>
-                <button type="submit" className="rounded-xl bg-[#2E5A4C] text-white px-4 py-2 font-semibold">
-                  Enviar Evaluación
-                </button>
-              </div>
+              <input
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Comentario breve (opcional)"
+                className="w-full min-h-12 rounded-2xl border border-[#E4E1DA] px-3.5 text-sm"
+              />
+              <button
+                type="submit"
+                className="w-full min-h-13 rounded-2xl bg-[#244B3E] text-white text-sm font-bold"
+              >
+                Enviar Calificación
+              </button>
             </form>
           </div>
         </div>

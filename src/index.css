@@ -3,28 +3,34 @@
 @layer base {
   :root {
     --color-cream: #f8f6f2;
-    --color-sage: #2e5a4c;
+    --color-sage: #244b3e;
     --color-sage-light: #e8f0ed;
     --color-terracotta: #c87d4b;
-    --color-charcoal: #33363b;
+    --color-ink: #1c2024;
   }
 
   html,
   body {
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #f8f6f2;
-    color: #33363b;
+    font-size: 16px;
+    background-color: #ece9e2;
+    color: #1c2024;
     overflow-x: hidden;
     max-width: 100%;
-  }
-
-  .font-serif-accent {
-    font-family: "Cormorant Garamond", Georgia, serif;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .font-mono-code {
     font-family: "JetBrains Mono", monospace;
   }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @keyframes pulseSoft {
@@ -34,12 +40,27 @@
   }
   50% {
     transform: scale(1.18);
-    opacity: 0.4;
+    opacity: 0.38;
   }
 }
 
 .animate-pulse-soft {
   animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes sheetUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-sheet-up {
+  animation: sheetUp 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes fadeInSlide {
@@ -54,5 +75,5 @@
 }
 
 .animate-fade-in {
-  animation: fadeInSlide 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: fadeInSlide 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }

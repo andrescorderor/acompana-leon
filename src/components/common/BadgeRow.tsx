@@ -1,4 +1,4 @@
-import { Award, ShieldCheck, UserCheck } from 'lucide-react';
+import { Award, Check, ShieldCheck, UserCheck } from 'lucide-react';
 import type { CompanionBadges } from '../../types';
 
 interface BadgeRowProps {
@@ -11,22 +11,19 @@ export function BadgeRow({ badges, compact = false }: BadgeRowProps) {
     {
       key: 'kyc',
       active: badges.kyc,
-      label: compact ? 'KYC' : '1. Identidad KYC',
-      title: 'INE, selfie biométrica, comprobante y carta de no antecedentes validados',
+      label: compact ? 'Identidad' : 'Identidad KYC',
       icon: ShieldCheck,
     },
     {
       key: 'references',
       active: badges.references,
-      label: compact ? 'Referencias' : '2. Aptitud & Referencias',
-      title: 'Entrevista psicosocial, ética y referencias verificadas',
+      label: 'Referencias',
       icon: UserCheck,
     },
     {
       key: 'certified40h',
       active: badges.certified40h,
-      label: compact ? 'Cert. 40h' : '3. Certificación 40h + 1os Aux.',
-      title: 'Programa 40h de Trato Digno, Movilidad Asistida y Primeros Auxilios',
+      label: 'Curso 40h',
       icon: Award,
     },
   ];
@@ -38,14 +35,13 @@ export function BadgeRow({ badges, compact = false }: BadgeRowProps) {
         return (
           <span
             key={item.key}
-            title={item.title}
-            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-medium border transition-colors ${
+            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold border ${
               item.active
-                ? 'bg-[#E8F0ED] text-[#2E5A4C] border-[#2E5A4C]/25'
+                ? 'bg-[#E8F0ED] text-[#244B3E] border-[#244B3E]/25'
                 : 'bg-zinc-100 text-zinc-400 border-zinc-200'
             }`}
           >
-            <Icon className="w-3 h-3 shrink-0" />
+            {item.active ? <Check className="w-3 h-3 shrink-0" /> : <Icon className="w-3 h-3 shrink-0" />}
             <span>{item.label}</span>
           </span>
         );
